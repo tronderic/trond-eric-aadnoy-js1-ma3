@@ -2,6 +2,8 @@
 
 const url = "https://api.rawg.io/api/games?dates=2019-01-01,2019-12-31&ordering=-rating&key=36289108e9d9490fb877aec28e0c511e";
 
+const container = document.querySelector(".main-container");
+
 async function gamesInfo() {
     try {
         const response = await fetch(url);
@@ -25,11 +27,14 @@ async function gamesInfo() {
                         <p>Number of tags: ${tags}</p>
                     </div>`;
         }
-        const container = document.querySelector(".main-container");
         container.innerHTML = html;
     } catch (error) {
-        console.log(error);
+        container.innerHTML = displayError("An error occurred while trying to fetch the API");
     }
 }
 
 gamesInfo();
+
+function displayError(message = "Unknown error") {
+    return `<div class="error">${message}</div>`;
+}
